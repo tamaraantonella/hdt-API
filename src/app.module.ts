@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import ConfigModuleBootstrapper from 'bootstrappers/config-module.bootstrapper';
+import TypeormModuleBootstrapper from 'bootstrappers/typeorm-module.bootstrapper';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [ConfigModuleBootstrapper(), TypeormModuleBootstrapper()],
 })
 export class AppModule {}
