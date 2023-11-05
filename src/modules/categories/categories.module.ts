@@ -12,6 +12,7 @@ import { CollectionCategory } from 'modules/collection-categories/entities/colle
     CollectionsModule
   ],
   controllers: [CategoriesController],
-  providers: [CategoriesService]
+  providers: [CategoriesService],
+  exports: [CategoriesService]
 })
 export class CategoriesModule {}

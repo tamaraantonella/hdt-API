@@ -13,7 +13,7 @@ export class CollectionsService {
   ) {}
 
   async create(createCollectionDto: CreateCollectionDto) {
-    const existingCollection = this.findByName(createCollectionDto.name);
+    const existingCollection = await this.findByName(createCollectionDto.name);
     if (existingCollection) {
       throw new BadRequestException('Collection already exists');
     }

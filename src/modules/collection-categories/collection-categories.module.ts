@@ -21,6 +21,7 @@ import { CollectionCategory } from './entities/collection-category.entity';
     CollectionsModule
   ],
   controllers: [CollectionCategoriesController],
-  providers: [CollectionCategoriesService]
+  providers: [CollectionCategoriesService],
+  exports: [CollectionCategoriesService]
 })
 export class CollectionCategoriesModule {}

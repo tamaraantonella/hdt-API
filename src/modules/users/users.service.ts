@@ -18,7 +18,8 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<ParsedUser> {
-    const foundUser = this.findByEmail(createUserDto.email);
+    const foundUser = await this.findByEmail(createUserDto.email);
+
     if (foundUser) {
       throw new BadRequestException('User already exists');
     }
@@ -34,7 +35,14 @@ export class UsersService {
   findByEmail(email: string) {
     return this.usersRepository
       .createQueryBuilder('user')
-      .select(['user.id', 'user.email', 'user.firstName', 'user.phone'])
+      .select([
+        'user.id',
+        'user.email',
+        'user.firstName',
+        'user.phone',
+        'user.password',
+        'user.role'
+      ])
       .where('user.email = :email', { email })
       .andWhere('user.deletedAt IS NULL')
       .andWhere('user.role != :role', { role: UserRole.GHOST })
@@ -51,8 +59,8 @@ export class UsersService {
       .getOne();
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
-    const userToUpdate = this.findById(id);
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    const userToUpdate = await this.findById(id);
     if (!userToUpdate) {
       throw new NotFoundException('User not found');
     }
