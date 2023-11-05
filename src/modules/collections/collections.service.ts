@@ -23,7 +23,7 @@ export class CollectionsService {
     return newCollection;
   }
 
-  findAll() {
+   findAll() {
     return this.collectionsRepository.find();
   }
 

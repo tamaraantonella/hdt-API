@@ -1,20 +1,22 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
   ParseIntPipe,
-  UseGuards
+  Patch,
+  Post,
+  UseGuards,
+  UseInterceptors
 } from '@nestjs/common';
+import { Auth } from 'decorators/auth.decorator';
+import { Role } from 'modules/auth/enums/role.enum';
+import { AuthGuard } from 'modules/auth/guards';
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
-import { AuthGuard } from 'modules/auth/guards';
-import { Auth } from 'decorators/auth.decorator';
-import { Role } from 'modules/auth/enums/role.enum';
+import { DataInterceptor } from 'src/interceptors/data.interceptor';
 
 @Controller('collections')
 export class CollectionsController {
@@ -27,16 +29,13 @@ export class CollectionsController {
     return this.collectionsService.create(createCollectionDto);
   }
 
+  @UseInterceptors(DataInterceptor)
   @Get()
   findAll() {
     return this.collectionsService.findAll();
   }
 
-  @Get(':name')
-  findByName(@Param('name') name: string) {
-    return this.collectionsService.findByName(name);
-  }
-
+  @UseInterceptors(DataInterceptor)
   @Get(':id')
   findById(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.findById(id);
@@ -46,16 +45,16 @@ export class CollectionsController {
   @Auth(Role.ADMIN)
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: number,
     @Body() updateCollectionDto: UpdateCollectionDto
   ) {
-    return this.collectionsService.update(+id, updateCollectionDto);
+    return this.collectionsService.update(id, updateCollectionDto);
   }
 
   @UseGuards(AuthGuard)
   @Auth(Role.ADMIN)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.collectionsService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.collectionsService.remove(id);
   }
 }
