@@ -9,18 +9,18 @@ import {
   Post,
   UseGuards
 } from '@nestjs/common';
+import { Auth } from 'decorators/auth.decorator';
+import { Role } from 'modules/auth/enums/role.enum';
+import { AuthGuard } from 'modules/auth/guards';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { AuthGuard } from 'modules/auth/guards';
-import { Role } from 'modules/auth/enums/role.enum';
-import { Auth } from 'decorators/auth.decorator';
 
-@UseGuards(AuthGuard)
 @Controller('categories')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createCategoryDto: CreateCategoryDto) {
     return this.categoriesService.create(createCategoryDto);
@@ -30,6 +30,8 @@ export class CategoriesController {
   findAll() {
     return this.categoriesService.findAll();
   }
+
+  @UseGuards(AuthGuard)
   @Auth(Role.ADMIN)
   @Get(':name')
   findByName(@Param('name') name: string) {
@@ -41,6 +43,7 @@ export class CategoriesController {
     return this.categoriesService.findById(id);
   }
 
+  @UseGuards(AuthGuard)
   @Auth(Role.ADMIN)
   @Patch(':id')
   update(
@@ -50,6 +53,7 @@ export class CategoriesController {
     return this.categoriesService.update(id, updateCategoryDto);
   }
 
+  @UseGuards(AuthGuard)
   @Auth(Role.ADMIN)
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {

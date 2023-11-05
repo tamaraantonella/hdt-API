@@ -1,8 +1,10 @@
+import { CollectionCategory } from 'modules/collection-categories/entities/collection-category.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
@@ -18,6 +20,9 @@ export class Category {
   @Column({ type: 'varchar', length: 50, nullable: true })
   color: string;
 
+  @Column({ nullable: false, type: 'int' })
+  collectionId: number;
+
   @CreateDateColumn()
   createdAt: Date;
 
@@ -26,4 +31,10 @@ export class Category {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @OneToMany(
+    () => CollectionCategory,
+    (collectionCategory) => collectionCategory.category
+  )
+  collectionCategories: CollectionCategory[];
 }
