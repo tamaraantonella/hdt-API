@@ -19,7 +19,9 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "bootstrappers/*": ["src/bootstrappers/*"],
-      "config/*": ["src/config/*"]
+      "config/*": ["src/config/*"],
+      "modules/*": ["src/modules/*"],
+      "decorators/*": ["src/decorators/*"]
     }
   }
 }
