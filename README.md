@@ -43,7 +43,7 @@ yarn start
 
 Below is the entity diagram that represents the database structure used by Hdt API:
 
-![Alt text](image.png)
+![Diagram](image.png)
 
 
 ## Contribution
