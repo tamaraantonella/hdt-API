@@ -11,7 +11,9 @@ import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { JwtPayload } from 'decorators/jwt-payload.decorator';
 import { JWTPayload } from './types';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}

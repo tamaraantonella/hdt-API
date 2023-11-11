@@ -15,7 +15,9 @@ import { UpdateCollectionCategoryDto } from './dto/update-collection-category.dt
 import { AuthGuard } from 'modules/auth/guards';
 import { Auth } from 'decorators/auth.decorator';
 import { Role } from 'modules/auth/enums/role.enum';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('collection-categories')
 @Controller('collection-categories')
 export class CollectionCategoriesController {
   constructor(

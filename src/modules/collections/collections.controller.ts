@@ -17,7 +17,9 @@ import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { DataInterceptor } from 'src/interceptors/data.interceptor';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('collections')
 @Controller('collections')
 export class CollectionsController {
   constructor(private readonly collectionsService: CollectionsService) {}
